@@ -64,6 +64,13 @@ void*           kalloc(void);
 void            kfree(void *);
 void            kinit(void);
 
+// halloc.c
+void*           halloc(uint64);
+void            hfree(void *);
+void            hinit(void);
+void            my_heap(void);
+void            print_state(void);
+
 // log.c
 void            initlog(int, struct superblock*);
 void            log_write(struct buf*);
@@ -106,6 +113,7 @@ void            yield(void);
 int             either_copyout(int user_dst, uint64 dst, void *src, uint64 len);
 int             either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 void            procdump(void);
+int             getprocs(void);     //定义getprocs函数
 
 // swtch.S
 void            swtch(struct context*, struct context*);
@@ -140,6 +148,7 @@ void            argaddr(int, uint64 *);
 int             fetchstr(uint64, char*, int);
 int             fetchaddr(uint64, uint64*);
 void            syscall();
+uint64          sys_heap(void);
 
 // trap.c
 extern uint     ticks;

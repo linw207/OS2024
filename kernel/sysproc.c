@@ -89,3 +89,9 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// 实现系统调用
+uint64 sys_getprocs(void)
+{
+ 	return getprocs();    // 稍后在内核中实现实际函数
+}

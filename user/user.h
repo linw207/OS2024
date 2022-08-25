@@ -39,3 +39,7 @@ void free(void*);
 int atoi(const char*);
 int memcmp(const void *, const void *, uint);
 void *memcpy(void *, const void *, uint);
+
+// 自定义系统调用
+int getprocs(void);
+void my_heap(void);

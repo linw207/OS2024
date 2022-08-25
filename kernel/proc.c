@@ -681,3 +681,32 @@ procdump(void)
     printf("\n");
   }
 }
+
+// 自定义函数实现
+int
+getprocs(void) {
+  struct proc *p;
+  char *state;
+  int num = 0;
+
+  static char *states[] = {
+  [UNUSED]    "unused",
+  [USED]      "used",
+  [SLEEPING]  "sleep ",
+  [RUNNABLE]  "runble",
+  [RUNNING]   "running",
+  [ZOMBIE]    "zombie"
+  };
+
+  printf("活跃进程:");
+  printf("\n");
+  for(p = proc; p < &proc[NPROC]; p++){
+    if(p->state == RUNNABLE || p->state == RUNNING || p->state == SLEEPING || p->state ==ZOMBIE){
+      num ++;
+      state = states[p->state];
+      printf("%d %s %s", p->pid, state, p->name);
+      printf("\n");
+    }
+  }
+  return num;
+}
