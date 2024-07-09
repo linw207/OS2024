@@ -24,6 +24,7 @@ int sleep(int);
 int uptime(void);
 //custom
 int lwy(void);
+int heapdemo(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

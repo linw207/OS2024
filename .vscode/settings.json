@@ -1,3 +1,7 @@
 {
-    "ros.distro": "galactic"
+    "ros.distro": "galactic",
+    "files.associations": {
+        "memlayout.h": "c",
+        "param.h": "c"
+    }
 }

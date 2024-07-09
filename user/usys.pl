@@ -38,3 +38,4 @@ entry("sleep");
 entry("uptime");
 # custom
 entry("lwy");
+entry("heapdemo")
