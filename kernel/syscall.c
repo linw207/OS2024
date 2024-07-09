@@ -101,7 +101,7 @@ extern uint64 sys_unlink(void);
 extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
-
+extern uint64 sys_lwy(void);
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
 static uint64 (*syscalls[])(void) = {
@@ -126,6 +126,7 @@ static uint64 (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
+[SYS_lwy]     sys_lwy
 };
 
 void
@@ -144,4 +145,19 @@ syscall(void)
             p->pid, p->name, num);
     p->trapframe->a0 = -1;
   }
+
+  switch(myproc()->trapframe->a7){
+    
+    case SYS_lwy:
+      myproc()->trapframe->a0 = sys_lwy();
+      break;
+    
+  }
+}
+
+
+uint64 sys_lwy(void)
+{
+		printf("This is No. %d system call!\n", SYS_lwy);
+		return lwy();
 }

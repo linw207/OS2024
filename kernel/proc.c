@@ -681,3 +681,17 @@ procdump(void)
     printf("\n");
   }
 }
+
+int lwy(){
+  struct proc *p;
+  int active_count = 0;
+  for(p = proc; p < &proc[NPROC]; p++) {
+    acquire(&p->lock);
+    if(p->state == RUNNING || p->state == RUNNABLE || p->state == SLEEPING) {
+      active_count++;
+    }
+    release(&p->lock);
+  }
+
+  return active_count;
+}
