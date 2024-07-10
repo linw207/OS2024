@@ -67,6 +67,12 @@ void *          malloc(uint64 size);
 void            free(void *ptr);
 void            heap_demo();
 
+// halloc.c
+void*           halloc(uint64);
+void            hfree(void *);
+void            hinit(void);
+void            my_heap(void);
+void            print_state(void);
 
 // log.c
 void            initlog(int, struct superblock*);

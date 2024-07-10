@@ -5,6 +5,7 @@
 int
 main(void)
 {
-  heapdemo();
+  //heapdemo();
+  myheap();
   exit(0);
 }

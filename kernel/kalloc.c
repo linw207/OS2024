@@ -9,11 +9,10 @@
 #include "riscv.h"
 #include "defs.h"
 
-#define HEAP_SIZE (8 * 1024 * 1024) // 8MB堆
-
 void freerange(void *pa_start, void *pa_end);
 
-extern char end[]; // first address after kernel, defined by kernel.ld.
+extern char end[]; // first address after kernel.
+                   // defined by kernel.ld.
 
 struct run {
   struct run *next;
@@ -24,22 +23,14 @@ struct {
   struct run *freelist;
 } kmem;
 
-// 堆的起始地址和大小
-char *heap_start;
-char *heap_end;
-char *heap_free_start;
-
 void
 kinit()
 {
   initlock(&kmem.lock, "kmem");
+  // freerange(end, (void*)PHYSTOP);
 
-  // 扣减8MB作为堆
-  heap_start = (char*)PHYSTOP - HEAP_SIZE;
-  heap_end = (char*)PHYSTOP;
-  heap_free_start = heap_start;
-
-  freerange(end, (void*)heap_start);
+  // 扣下16MB给自己的堆
+  freerange(end, (void*)HEAPSTART);   
 }
 
 void
@@ -60,7 +51,8 @@ kfree(void *pa)
 {
   struct run *r;
 
-  if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= (uint64)heap_start)
+  // if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= PHYSTOP)
+  if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= HEAPSTART)
     panic("kfree");
 
   // Fill with junk to catch dangling refs.
@@ -93,51 +85,7 @@ kalloc(void)
   return (void*)r;
 }
 
-// 简单的字节级分配函数
-void *
-malloc(uint64 size)
-{
-  char *ptr;
 
-  if (size == 0 || heap_free_start + size > heap_end)
-    return 0;
-
-  ptr = heap_free_start;
-  heap_free_start += size;
-
-  return (void*)ptr;
-}
-
-// 简单的字节级释放函数（暂不实现复杂的空闲列表管理）
-void
-free(void *ptr)
-{
-  // 不实现复杂的释放逻辑
-}
-
-// 演示函数
-void
-heap_demo()
-{
-  printf("Heap demo start\n");
-
-  void *p1 = malloc(1024);
-  printf("Allocated 1024 bytes at %p\n", p1);
-
-  void *p2 = malloc(2048);
-  printf("Allocated 2048 bytes at %p\n", p2);
-
-  free(p1);
-  printf("Freed 1024 bytes at %p\n", p1);
-
-  void *p3 = malloc(4096);
-  printf("Allocated 4096 bytes at %p\n", p3);
-
-  free(p2);
-  printf("Freed 2048 bytes at %p\n", p2);
-
-  free(p3);
-  printf("Freed 4096 bytes at %p\n", p3);
-
-  printf("Heap demo end\n");
+void heap_demo(void){
+  return ;
 }

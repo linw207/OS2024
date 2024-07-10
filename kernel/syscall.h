@@ -22,3 +22,4 @@
 #define SYS_close  21
 #define SYS_lwy    22
 #define SYS_heapdemo 23
+#define SYS_myheap 24
