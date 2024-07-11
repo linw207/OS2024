@@ -682,13 +682,15 @@ procdump(void)
   }
 }
 
-// 自定义函数实现
+//自定义函数实现
+//init.c中额外增加了一个进程，所以是4个活跃进程
 int
 getprocs(void) {
   struct proc *p;
   char *state;
   int num = 0;
-
+  
+  //用于打印信息
   static char *states[] = {
   [UNUSED]    "unused",
   [USED]      "used",
@@ -700,13 +702,13 @@ getprocs(void) {
 
   printf("活跃进程:");
   printf("\n");
-  for(p = proc; p < &proc[NPROC]; p++){
+  for(p = proc; p < &proc[NPROC]; p++){//&proc[NPROC] 结束位置，NPROC=64最大进程数量
     if(p->state == RUNNABLE || p->state == RUNNING || p->state == SLEEPING || p->state ==ZOMBIE){
       num ++;
       state = states[p->state];
       printf("%d %s %s", p->pid, state, p->name);
       printf("\n");
-    }
+    }//ZOMBIE已经终止但其退出状态尚未被父进程获取的进程。 
   }
   return num;
 }

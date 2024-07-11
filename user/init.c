@@ -36,7 +36,7 @@ main(void)
       exit(1);
     }
 
-  // 我额外创建了一个没用的进程
+  // 额外创建了一个没用的进程
     pid = fork();
     if(pid < 0){
       printf("init: fork failed\n");

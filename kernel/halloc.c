@@ -127,18 +127,23 @@ my_heap() {
     // printf("释放所有的内存分配\n",test4);
     // print_state();
     void *t1, *t2, *t3;
-    printf("give 100");
+    printf("give 100\n");
     t1 = halloc(100);
-    printf("give 200");
-    t2 = halloc(200);
-    printf("give 300");
-    t3 = halloc(300);
     print_state();
 
+    printf("give 200\n");
+    t2 = halloc(200);
+    print_state();
     hfree(t1);
+    printf("释放t1\n");
     hfree(t2);
+    printf("释放t2\n");
+
+    printf("give 300\n");
+    t3 = halloc(300);
     print_state();
     printf(t3);
+    hfree(t3);
 }
 
 

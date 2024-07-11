@@ -22,4 +22,4 @@
 #define SYS_close  21
 
 #define SYS_getprocs  22   //自定义系统调用的调用号
-#define SYS_heap 23    
+#define SYS_my_heap 23    
