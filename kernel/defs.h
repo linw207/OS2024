@@ -70,6 +70,9 @@ void            hfree(void *);
 void            hinit(void);
 void            my_heap(void);
 void            print_state(void);
+// void            command_line_interface(void);
+// int             my_atoi(const char *str);
+// unsigned long long my_strtoull(const char *str, char **endptr, int base);
 
 // log.c
 void            initlog(int, struct superblock*);

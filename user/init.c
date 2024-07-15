@@ -49,18 +49,6 @@ main(void)
       }
     }
 
-  //    pid = fork();
-  //   if(pid < 0){
-  //     printf("init: fork failed\n");
-  //     exit(1);
-  //   }
-  //   if(pid == 0){
-  //     // 子进程，不执行 exec()
-  //     while(1){
-  //       sleep(100);
-  //     }
-  //   }
-
     for(;;){
       // this call to wait() returns if the shell exits,
       // or if a parentless process exits.
