@@ -21,6 +21,7 @@ void            bunpin(struct buf*);
 void            consoleinit(void);
 void            consoleintr(int);
 void            consputc(int);
+int             consoleread(int user_dst, uint64 dst, int n);
 
 // exec.c
 int             exec(char*, char**);
@@ -66,13 +67,11 @@ void            kinit(void);
 
 // halloc.c
 void*           halloc(uint64);
-void            hfree(void *);
+//void            hfree(void *);
 void            hinit(void);
 void            my_heap(void);
 void            print_state(void);
-// void            command_line_interface(void);
-// int             my_atoi(const char *str);
-// unsigned long long my_strtoull(const char *str, char **endptr, int base);
+void            hfree_by_id(int id);
 
 // log.c
 void            initlog(int, struct superblock*);
