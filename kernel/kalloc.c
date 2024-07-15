@@ -29,6 +29,7 @@ kinit()
   initlock(&kmem.lock, "kmem");
   // freerange(end, (void*)PHYSTOP);
   freerange(end, (void*)HEAPSTART);   // 扣下16MB给自己的堆
+  //更新kinit的初始化范围
 }
 
 void
@@ -51,6 +52,7 @@ kfree(void *pa)
 
   // if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= PHYSTOP)
   if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= HEAPSTART)
+  //更新kfree的判定范围
     panic("kfree");
 
   // Fill with junk to catch dangling refs.

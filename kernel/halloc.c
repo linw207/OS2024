@@ -16,8 +16,12 @@ typedef struct block {
     size_t size;//当前内存块的大小。
     int free;       // 1空闲， 0分配
 } blockNode;
+
+//表示整个16MB的堆
 static blockNode *heapList;//heapList 是指向链表头部的指针，表示堆的起始地址。
+
 //整个堆内存空间被组织成一个由 blockNode 组成的单向链表，链表中的每个节点表示一个内存块。
+
 static struct spinlock heapLock;//spinlock 结构体用于实现互斥锁，以确保在多核环境下进行内存分配和释放操作时的线程安全。
 
 // 堆内存分配器初始化函数
@@ -41,7 +45,7 @@ void *halloc(size_t size)
             if (current->size >= size + ALIGNMENT) {
                 //大小大于等于 size + ALIGNMENT，则将其分割成两块，一块用于分配，另一块作为新的空闲块。
                 blockNode *newBlock = (blockNode *)((char *)current + size);
-                newBlock->size = current->size - size;
+                newBlock->size = current->size - size;//当前块大小减去分配给用户的大小
                 newBlock->free = 1;//标记为未分配分配
                 newBlock->next = current->next;
                 current->next = newBlock;
@@ -62,7 +66,6 @@ void *halloc(size_t size)
 // 块释放函数：每次释放会执行一次合并操作
 void hfree(void *ptr)
 {
-
     blockNode *block = (blockNode *)ptr;
 
     if (!ptr ) return;// 如果指针为 NULL，直接返回
